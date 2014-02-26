@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+	<Button
+		android:layout_height="200dp"
+		android:text="Emergency"
+		android:layout_width="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentLeft="true"
+		android:id="@+id/emergency"
+		android:background="#A80B01"
+		android:textColor="#FBFBFB"
+		android:padding="6dp"
+		android:layout_margin="3dp"/>
 
-</LinearLayout>
+	<Button
+		android:layout_height="150dp"
+		android:text="Messages"
+		android:layout_width="150dp"
+		android:layout_below="@id/emergency"
+		android:id="@+id/messages"
+		android:background="#2D7FBE"
+		android:textColor="#FFFEFD"
+		android:padding="10dp"
+		android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:layout_marginBottom="3dp"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Free text"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/messages"
+		android:id="@+id/text"
+		android:layout_alignRight="@id/messages"
+		android:layout_alignParentLeft="true"
+		android:background="#212F64"
+		android:textColor="#FBFBFB"
+		android:layout_marginLeft="3dp"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Check in"
+		android:layout_width="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/emergency"
+		android:layout_alignBottom="@id/text"
+		android:layout_toLeftOf="@id/messages"
+		android:id="@+id/check"
+		android:layout_toRightOf="@id/messages"
+		android:background="#0A4F11"
+		android:textColor="#FBF8F7"
+		android:layout_marginRight="3dp"/>
+
+	<Button
+		android:layout_height="51dp"
+		android:text="Beacon"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/text"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:id="@+id/beacon"
+		android:layout_alignParentBottom="true"
+		android:background="#5C1A6C"
+		android:textColor="#FCFCFC"
+		android:layout_margin="3dp"/>
+
+</RelativeLayout>
+
