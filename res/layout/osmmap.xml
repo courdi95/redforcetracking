@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent">
@@ -9,8 +9,19 @@
 		android:text="Map"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="match_parent"
-		android:textAlignment="center"/>
-	
-	
-</FrameLayout>
+		android:textAlignment="center"
+		android:id="@+id/osmmapTextView1"
+		android:layout_centerHorizontal="true"/>
+
+	<org.osmdroid.views.MapView
+		android:id="@+id/mapview"
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent"
+		android:layout_centerVertical="true"
+		android:clickable="true"
+		android:layout_below="@id/osmmapTextView1">
+
+	</org.osmdroid.views.MapView>
+
+</RelativeLayout>
 

@@ -15,7 +15,8 @@
 		android:background="#A80B01"
 		android:textColor="#FBFBFB"
 		android:padding="6dp"
-		android:layout_margin="3dp"/>
+		android:layout_margin="3dp"
+		android:textSize="30sp"/>
 
 	<Button
 		android:layout_height="150dp"
@@ -28,7 +29,8 @@
 		android:padding="10dp"
 		android:layout_marginLeft="3dp"
 		android:layout_marginRight="3dp"
-		android:layout_marginBottom="3dp"/>
+		android:layout_marginBottom="3dp"
+		android:textSize="20sp"/>
 
 	<Button
 		android:layout_height="wrap_content"
@@ -40,7 +42,8 @@
 		android:layout_alignParentLeft="true"
 		android:background="#212F64"
 		android:textColor="#FBFBFB"
-		android:layout_marginLeft="3dp"/>
+		android:layout_marginLeft="3dp"
+		android:textSize="20sp"/>
 
 	<Button
 		android:layout_height="wrap_content"
@@ -48,13 +51,14 @@
 		android:layout_width="wrap_content"
 		android:layout_alignParentRight="true"
 		android:layout_below="@id/emergency"
-		android:layout_alignBottom="@id/text"
+		android:layout_alignBottom="@id/messages"
 		android:layout_toLeftOf="@id/messages"
 		android:id="@+id/check"
 		android:layout_toRightOf="@id/messages"
 		android:background="#0A4F11"
 		android:textColor="#FBF8F7"
-		android:layout_marginRight="3dp"/>
+		android:layout_marginRight="3dp"
+		android:textSize="20sp"/>
 
 	<Button
 		android:layout_height="51dp"
@@ -67,7 +71,23 @@
 		android:layout_alignParentBottom="true"
 		android:background="#5C1A6C"
 		android:textColor="#FCFCFC"
-		android:layout_margin="3dp"/>
+		android:layout_margin="3dp"
+		android:textSize="25sp"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Map"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/check"
+		android:layout_alignParentRight="true"
+		android:layout_alignBottom="@id/text"
+		android:layout_alignLeft="@id/check"
+		android:background="#AD420A"
+		android:textSize="20sp"
+		android:layout_marginTop="3dp"
+		android:layout_marginRight="3dp"
+		android:id="@+id/maposm"
+		android:textColor="#FBFBFB"/>
 
 </RelativeLayout>
 

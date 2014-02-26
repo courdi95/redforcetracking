@@ -22,7 +22,9 @@ public class MainActivity extends Activity
 		Button bCheck = (Button) findViewById(R.id.check);
 		Button bBeacon = (Button) findViewById(R.id.beacon);
 		Button bText = (Button) findViewById(R.id.text);
-
+		Button bMap = (Button) findViewById(R.id.maposm);
+		
+		
 		bEmergency.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -78,14 +80,26 @@ public class MainActivity extends Activity
 
 					Toast.makeText(getApplicationContext(), "Free text",
 								   Toast.LENGTH_SHORT).show();
+//					Intent intt = new Intent(me, MyMap.class);
+//					startActivity(intt);
+				};
+			}
+
+		);
+		
+		bMap.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View p1)
+				{
+
+					Toast.makeText(getApplicationContext(), "Map",
+								   Toast.LENGTH_SHORT).show();
 					Intent intt = new Intent(me, MyMap.class);
 					startActivity(intt);
 				};
 			}
 
 		);
-		
-		
 		
     }
 
