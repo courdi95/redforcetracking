@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Settings"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="match_parent"/>
+
+	<View
+		android:layout_height="1dp"
+		android:background="?android:attr/dividerVertical"
+		android:layout_width="match_parent"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Center phone number"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:inputType="phone"
+		android:ems="10"
+		android:layout_width="match_parent"/>
+
+	<View
+		android:layout_height="1dp"
+		android:background="?android:attr/dividerVertical"
+		android:layout_width="match_parent"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Record"
+		android:layout_width="match_parent"/>
+
+</LinearLayout>
+

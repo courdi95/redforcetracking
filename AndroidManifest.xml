@@ -32,6 +32,18 @@
 		<activity
 			android:name=".MyMap"
 			/>
+		<activity
+			android:name=".MyMessage"
+		/>
+	
+		<activity
+			android:name=".MySettings"
+		/>
+		
+
+		<activity
+			android:name=".MyCheckin"
+		/>
     </application>
 
 </manifest>

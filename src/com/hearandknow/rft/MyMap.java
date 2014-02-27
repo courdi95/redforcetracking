@@ -18,8 +18,8 @@ public class MyMap extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osmmap);
 		
-		Toast.makeText(getApplicationContext(), "bbbbbb",
-					   Toast.LENGTH_SHORT).show();
+//		Toast.makeText(getApplicationContext(), "bbbbbb",
+//					   Toast.LENGTH_SHORT).show();
 
 	//	MapView mapView = new MapView(this, 256); //constructor
 		
