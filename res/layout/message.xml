@@ -15,12 +15,14 @@
 		android:layout_height="100dp"
 		android:inputType="textMultiLine"
 		android:ems="10"
-		android:layout_width="match_parent"/>
+		android:layout_width="match_parent"
+		android:id="@+id/text_message"/>
 
 	<Button
 		android:layout_height="wrap_content"
 		android:text="Send"
-		android:layout_width="match_parent"/>
+		android:layout_width="match_parent"
+		android:id="@+id/send_message"/>
 
 </LinearLayout>
 

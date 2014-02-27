@@ -4,13 +4,27 @@ import android.app.*;
 import android.content.*;
 import android.location.*;
 import android.os.*;
+import android.telephony.gsm.*;
+import android.text.format.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+import java.util.*;
 
 public class MainActivity extends Activity
 {
 	private final Activity me = this;
+	private SharedPreferences sharedPref;
+	private String num_center;
+	private String default_num_center = "003360000000";
+	private double myLatitude; 
+	private double myLongitude; 	
+	private Location myLocation;
+	private int myAccuracy; 
+	private boolean hasmyAccuracy;
+	private long myTime; 
+	
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -21,21 +35,22 @@ public class MainActivity extends Activity
 
 		//Context context = this;
 
-		SharedPreferences sharedPref = getSharedPreferences(
+		sharedPref = getSharedPreferences(
 			getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-		int newHighScore = 5;
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt(getString(R.string.saved_high_score), newHighScore);
-		editor.commit();
-		
-		int defaultValue = 10;
+		num_center = sharedPref.getString(getString(R.string.saved_num_center), default_num_center);
+			
+//		int newHighScore = 5;
+//		SharedPreferences.Editor editor = sharedPref.edit();
+//		editor.putInt(getString(R.string.saved_high_score), newHighScore);
+//		editor.commit();
+//		
+//		int defaultValue = 10;
 
 //		int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
-    	int highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
+    	//int highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
 
-		Toast.makeText(getApplicationContext(), Integer.toString(highScore),
-					   Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), Integer.toString(highScore),
+					//   Toast.LENGTH_SHORT).show();
 
 		Button bEmergency = (Button) findViewById(R.id.emergency);
 		Button bMessages = (Button) findViewById(R.id.messages);
@@ -49,9 +64,141 @@ public class MainActivity extends Activity
 
 				public void onClick(View p1)
 				{
-
-					Toast.makeText(getApplicationContext(), "Emergency",
+					String msgAlerte;
+					String msgToast;
+					msgToast = "Emergency message sent to ";
+					msgToast = msgToast.concat(num_center);
+					Toast.makeText(getApplicationContext(), msgToast,
 								   Toast.LENGTH_SHORT).show();
+								   
+					//String retourGps;
+					//retourGps = getLastKnownLocation();
+					msgAlerte = "Alerte pour le portable xxxxxx .";
+					//	LocationManager mylocationManager = (LocationManager) myContext.getSystemService(Context.LOCATION_SERVICE);	 
+					LocationManager mylocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
+					// récupère Location 
+					myLocation = mylocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); 	 
+					if (myLocation != null)
+					{ 		 	
+					// recupére infos 		
+						msgAlerte = msgAlerte.concat(" Derniere position connue : ");
+						// Accuracy 	
+						// 1 	
+						hasmyAccuracy = myLocation.hasAccuracy(); 	
+						if (hasmyAccuracy)
+						{ 		
+							msgAlerte = msgAlerte.concat(" precision : ");
+//							chaine_status = chaine_status.concat("y"); 	
+//							chaine_status = chaine_status.concat(";");		 
+							myAccuracy = (int) myLocation.getAccuracy(); 
+						} 	
+						else
+						{ 		
+							msgAlerte = msgAlerte.concat(" pas de precision : ");
+//							chaine_status = chaine_status.concat("n"); 		
+//							chaine_status = chaine_status.concat(";");	 	
+							myAccuracy = 0;			 	
+						}; 	
+
+						//2 		
+						msgAlerte=msgAlerte.concat(String.valueOf(myAccuracy)); 	
+						msgAlerte = msgAlerte.concat(" -"); 
+						// Altitude 	
+
+						// 3 	
+//						hasmyAltitude = myLocation.hasAltitude(); 	
+//						if (hasmyAltitude)
+//						{ 	
+//							chaine_status = chaine_status.concat("y"); 	
+//							chaine_status = chaine_status.concat(";");	
+//							myAltitude = (int) myLocation.getAltitude(); 	
+//						} 	
+//						else
+//						{ 			
+//							chaine_status = chaine_status.concat("n"); 	
+//							chaine_status = chaine_status.concat(";");		
+//							myAltitude = 0; 	
+//						}; 	
+
+						// 4 	
+//						chaine_status = chaine_status.concat(String.valueOf(myAltitude)); 	
+//						chaine_status = chaine_status.concat(";"); 			 
+//
+//						// Bearing 	
+//						// 5 	
+//						hasmyBearing = myLocation.hasBearing(); 	
+//						if (hasmyBearing)
+//						{ 			
+//							chaine_status = chaine_status.concat("y"); 	
+//							chaine_status = chaine_status.concat(";"); 	
+//							myBearing = (int) myLocation.getBearing();		 
+//						} 	
+//						else
+//						{ 			
+//							chaine_status = chaine_status.concat("n"); 			
+//							chaine_status = chaine_status.concat(";"); 				
+//							myBearing = 0;	
+//						}; 		
+//
+//						// 6 	
+//						chaine_status = chaine_status.concat(String.valueOf(myBearing)); 	
+//						chaine_status = chaine_status.concat(";"); 	 
+
+						// Latitude et longitude 	
+						// 7 	
+						msgAlerte = msgAlerte.concat(" lat : ");
+						myLatitude = myLocation.getLatitude(); 	
+						msgAlerte = msgAlerte.concat(String.valueOf(myLatitude)); 	
+						msgAlerte = msgAlerte.concat(" -"); 		 	
+
+						// 8 	
+						msgAlerte = msgAlerte.concat(" lon : ");
+						myLongitude = myLocation.getLongitude(); 	
+						msgAlerte = msgAlerte.concat(String.valueOf(myLongitude)); 	
+						msgAlerte = msgAlerte.concat(" -"); 		 
+
+						// Speed 		// 9 	
+//						hasmySpeed = myLocation.hasSpeed(); 	
+//						if (hasmySpeed)
+//						{ 	
+//							chaine_status = chaine_status.concat("y"); 		
+//							chaine_status = chaine_status.concat(";"); 	
+//							mySpeed = (int) myLocation.getSpeed(); 		
+//						} 	
+//						else
+//						{ 	
+//							chaine_status = chaine_status.concat("n"); 		
+//							chaine_status = chaine_status.concat(";");	
+//							mySpeed = 0; 	
+//						}; 	
+//
+//						// 10 	
+//						chaine_status = chaine_status.concat(String.valueOf(mySpeed)); 	
+//						chaine_status = chaine_status.concat(";"); 		
+
+						// time 		// 11	 	
+						myTime = myLocation.getTime(); 	
+						String dateString= DateFormat.format("MM/dd/yyyy hh:mm:ss", new Date(myTime)).toString();
+
+						
+						msgAlerte = msgAlerte.concat(" date : ");
+						msgAlerte = msgAlerte.concat(dateString); 	
+						//msgAlerte = msgAlerte.concat(";"); 		 	
+
+
+						/////////////	 		 
+					} 	 
+					else
+					{		 	
+						msgAlerte = msgAlerte.concat(" Pas de position."); 	
+					} 	 	 
+					
+					
+					////////
+					SmsManager msmsManager = SmsManager.getDefault(); 	
+					msmsManager.sendTextMessage(num_center, null, msgAlerte, null, null);
+
+					
 				};
 			}
 
@@ -165,7 +312,7 @@ public class MainActivity extends Activity
 
 
 		//	LocationManager mylocationManager = (LocationManager) myContext.getSystemService(Context.LOCATION_SERVICE);	 
-		LocationManager	mylocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
+		LocationManager mylocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
 // récupère Location 
 		myLocation = mylocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); 	 
 		if (myLocation != null)
