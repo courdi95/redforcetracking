@@ -14,7 +14,12 @@
 
 	<Spinner
 		android:layout_height="wrap_content"
-		android:layout_width="match_parent"/>
+		android:layout_width="match_parent"
+		
+		android:entries="@array/check_list" 
+		android:prompt="@string/check_prompt" 
+		
+		/>
 
 	<Button
 		android:layout_height="wrap_content"

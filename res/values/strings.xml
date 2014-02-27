@@ -7,5 +7,14 @@
 	<string name="saved_high_score">saved_high_score</string>
 	<string name="saved_num_center">saved_num_center</string>
 	<string name="saved_high_score_default">saved_high_score_default</string>
-	
+	<string name="check_prompt">choose</string>
+ 
+	<string-array name="check_list">
+		<item>Hotel</item>
+		<item>Airport</item>
+		<item>Customer</item>
+		<item>Home</item>
+		<item>Metro</item>
+	</string-array>
+
 </resources>
