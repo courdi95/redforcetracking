@@ -18,6 +18,25 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main2);
 
+
+		//Context context = this;
+
+		SharedPreferences sharedPref = getSharedPreferences(
+			getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+		int newHighScore = 5;
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(getString(R.string.saved_high_score), newHighScore);
+		editor.commit();
+		
+		int defaultValue = 10;
+
+//		int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
+    	int highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
+
+		Toast.makeText(getApplicationContext(), Integer.toString(highScore),
+					   Toast.LENGTH_SHORT).show();
+
 		Button bEmergency = (Button) findViewById(R.id.emergency);
 		Button bMessages = (Button) findViewById(R.id.messages);
 		Button bCheck = (Button) findViewById(R.id.check);
@@ -25,7 +44,7 @@ public class MainActivity extends Activity
 		//Button bText = (Button) findViewById(R.id.text);
 		Button bMap = (Button) findViewById(R.id.maposm);
 		Button bSettings = (Button) findViewById(R.id.settings);
-		
+
 		bEmergency.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -37,7 +56,7 @@ public class MainActivity extends Activity
 			}
 
 		);
-		
+
 		bMessages.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -50,21 +69,21 @@ public class MainActivity extends Activity
 			}
 
 		);
-		
+
 		bCheck.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
 				{
 					Intent intt = new Intent(me, MyCheckin.class);
 					startActivity(intt);
-					
-				//	Toast.makeText(getApplicationContext(), "Check",
-				//				   Toast.LENGTH_SHORT).show();
+
+					//	Toast.makeText(getApplicationContext(), "Check",
+					//				   Toast.LENGTH_SHORT).show();
 				};
 			}
 
 		);
-		
+
 		bSettings.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -78,7 +97,7 @@ public class MainActivity extends Activity
 			}
 
 		);
-		
+
 		bBeacon.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -90,7 +109,7 @@ public class MainActivity extends Activity
 			}
 
 		);
-		
+
 //		bText.setOnClickListener(new OnClickListener() {
 //
 //				public void onClick(View p1)
@@ -104,7 +123,7 @@ public class MainActivity extends Activity
 //			}
 //
 //		);
-		
+
 		bMap.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -118,11 +137,11 @@ public class MainActivity extends Activity
 			}
 
 		);
-		
+
     }
-	
-	
-	
+
+
+
 	public  String getLastKnownLocation()
 	{ 	
 // variables 
