@@ -14,7 +14,7 @@ public class MyMessage extends  Activity
 	private String num_center;
 	private String text_message;
 	private EditText mEditText;
-	private String default_num_center = "0033676752005";
+	private String default_num_center = "0033000000000";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState)
