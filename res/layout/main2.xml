@@ -104,12 +104,24 @@
 		<Button
 			android:layout_height="match_parent"
 			android:text="Settings"
-			android:layout_width="match_parent"
+			android:layout_width="0dp"
 			android:textColor="#FCFCFC"
 			android:layout_margin="3dp"
 			android:textSize="20sp"
+			android:layout_weight="0.5"
 			android:background="#6D6868"
 			android:id="@+id/settings"/>
+
+		<Button
+			android:layout_height="match_parent"
+			android:text="Gps info"
+			android:layout_width="0dp"
+			android:layout_weight="0.5"
+			android:background="#6D6868"
+			android:textColor="#FCFCFC"
+			android:textSize="20sp"
+			android:layout_margin="3dp"
+			android:id="@+id/gps"/>
 
 	</LinearLayout>
 

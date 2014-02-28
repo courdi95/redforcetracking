@@ -11,7 +11,7 @@ import android.view.View.*;
 import android.widget.*;
 import java.util.*;
 
-public class MainActivity extends Activity
+public class MainActivity extends Activity implements LocationListener
 {
 	private final Activity me = this;
 	private SharedPreferences sharedPref;
@@ -24,6 +24,12 @@ public class MainActivity extends Activity
 	private boolean hasmyAccuracy;
 	private long myTime; 
 	
+	// GPSTracker class
+ 	GpsTracker myGpsTracker;
+	
+	// gps
+	LocationManager mainLocationManager;
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -32,26 +38,36 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main2);
 
-
-		//Context context = this;
-
+		//numero par defaut
 		sharedPref = getSharedPreferences(
 			getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 		num_center = sharedPref.getString(getString(R.string.saved_num_center), default_num_center);
-			
-//		int newHighScore = 5;
-//		SharedPreferences.Editor editor = sharedPref.edit();
-//		editor.putInt(getString(R.string.saved_high_score), newHighScore);
-//		editor.commit();
-//		
-//		int defaultValue = 10;
+	
+		
+		// gps
 
-//		int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
-    	//int highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
+		/********** get Gps location service LocationManager object ***********/
 
-		//Toast.makeText(getApplicationContext(), Integer.toString(highScore),
-					//   Toast.LENGTH_SHORT).show();
+		mainLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+		/* CAL METHOD requestLocationUpdates */
+
+
+		// Parameters :
+		//   First(provider)    :  the name of the provider with which to register 
+		//   Second(minTime)    :  the minimum time interval for notifications, 
+		//                         in milliseconds. This field is only used as a hint 
+		//                         to conserve power, and actual time between location 
+		//                         updates may be greater or lesser than this value. 
+		//   Third(minDistance) :  the minimum distance interval for notifications, in meters 
+		//   Fourth(listener)   :  a {#link LocationListener} whose onLocationChanged(Location) 
+		//                         method will be called for each location update 
+
+		mainLocationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+									3000,// 3 sec
+									10, this);
+		
+		// boutons
 		Button bEmergency = (Button) findViewById(R.id.emergency);
 		Button bMessages = (Button) findViewById(R.id.messages);
 		Button bCheck = (Button) findViewById(R.id.check);
@@ -60,6 +76,42 @@ public class MainActivity extends Activity
 		Button bMap = (Button) findViewById(R.id.maposm);
 		Button bSettings = (Button) findViewById(R.id.settings);
 
+		Button btnShowLocation = (Button) findViewById(R.id.gps);
+
+		// show location button click event
+		btnShowLocation.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+
+					// create class object
+
+					myGpsTracker = new GpsTracker(MainActivity.this);
+
+					// check if GPS enabled     
+
+					if(myGpsTracker.canGetLocation()){
+
+						double latitude = myGpsTracker.getLatitude();
+						double longitude = myGpsTracker.getLongitude();
+
+						// \n is for new line
+
+						Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+					}else{
+
+						// can't get location
+						// GPS or Network is not enabled
+						// Ask user to enable GPS/network in settings
+
+						myGpsTracker.showSettingsAlert();
+
+					}
+				}
+
+			});
+		
 		bEmergency.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View p1)
@@ -288,6 +340,40 @@ public class MainActivity extends Activity
     }
 
 
+	/************* Called after each 3 sec **********/
+
+	@Override
+	public void onLocationChanged(Location location) {
+
+		String str = "Latitude: "+location.getLatitude()+"Longitude: "+location.getLongitude();
+		Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+
+	}
+
+
+
+	@Override
+	public void onProviderDisabled(String provider) {
+
+		/******** Called when User off Gps *********/
+		Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+
+		/******** Called when User on Gps  *********/
+		Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+
+	// TODO Auto-generated method stub
+
+	}
 
 	public  String getLastKnownLocation()
 	{ 	
@@ -425,86 +511,140 @@ public class MainActivity extends Activity
 	}
 
 	
-	/////////////
-//	Button btnShowLocation;
-//
-//	     
-//
-//	    // GPSTracker class
-//
-//	    GPSTracker gps;
-//
-//	     
-//
-//	    @Override
-//
-//	    public void onCreate(Bundle savedInstanceState) {
-//
-//		        super.onCreate(savedInstanceState);
-//
-//		        setContentView(R.layout.main);
-//
-//		         
-//
-//		        btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
-//
-//		         
-//
-//		        // show location button click event
-//
-//		        btnShowLocation.setOnClickListener(new View.OnClickListener() {
-//
-//				             
-//
-//				            @Override
-//
-//				            public void onClick(View arg0) {        
-//
-//					                // create class object
-//
-//					                gps = new GPSTracker(AndroidGPSTrackingActivity.this);
-//
-//					 
-//
-//					                // check if GPS enabled     
-//
-//					                if(gps.canGetLocation()){
-//
-//						                     
-//
-//						                    double latitude = gps.getLatitude();
-//
-//						                    double longitude = gps.getLongitude();
-//
-//						                     
-//
-//						                    // \n is for new line
-//
-//						                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();    
-//
-//					                }else{
-//
-//						                    // can't get location
-//
-//						                    // GPS or Network is not enabled
-//
-//						                    // Ask user to enable GPS/network in settings
-//
-//						                    gps.showSettingsAlert();
-//
-//					                }
-//
-//					                 
-//
-//				            }
-//
-//			        });
-//
-//	    }
-//
-	/////////
 	
 	
 	
 	
 }
+
+
+////////////
+
+//	            private LocationManager locationManager;
+//
+//	             
+//
+//	            @Override
+//
+//	            protected void onCreate(Bundle savedInstanceState) {
+//
+//		             
+//
+//		                super.onCreate(savedInstanceState);
+//
+//		                setContentView(R.layout.activity_gps_basics_android_example);
+//
+//		                 
+//
+//		                /********** get Gps location service LocationManager object ***********/
+//
+//		                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//
+//		                 
+//
+//		                /* CAL METHOD requestLocationUpdates */
+//
+//		                   
+//
+//		                  // Parameters :
+//
+//		                  //   First(provider)    :  the name of the provider with which to register 
+//
+//		                  //   Second(minTime)    :  the minimum time interval for notifications, 
+//
+//		                  //                         in milliseconds. This field is only used as a hint 
+//
+//		                  //                         to conserve power, and actual time between location 
+//
+//		                  //                         updates may be greater or lesser than this value. 
+//
+//		                  //   Third(minDistance) :  the minimum distance interval for notifications, in meters 
+//
+//		                  //   Fourth(listener)   :  a {#link LocationListener} whose onLocationChanged(Location) 
+//
+//		                  //                         method will be called for each location update 
+//
+//		                
+//
+//		                 
+//
+//		                locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+//
+//											                           3000,   // 3 sec
+//
+//											                           10, this);
+//
+//		                 
+//
+//		                /********* After registration onLocationChanged method  ********/
+//
+//		                /********* called periodically after each 3 sec ***********/
+//
+//	            }
+//
+//	             
+//
+//	            /************* Called after each 3 sec **********/
+//
+//	            @Override
+//
+//	            public void onLocationChanged(Location location) {
+//
+//		                    
+//
+//		                String str = "Latitude: "+location.getLatitude()+" 
+//
+//		Longitude: "+location.getLongitude();
+//
+//		  
+//
+//		                Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+//
+//	            }
+//
+//	         
+//
+//	            @Override
+//
+//	            public void onProviderDisabled(String provider) {
+//
+//		                 
+//
+//		                /******** Called when User off Gps *********/
+//
+//		                 
+//
+//		                Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
+//
+//	            }
+//
+//	         
+//
+//	            @Override
+//
+//	            public void onProviderEnabled(String provider) {
+//
+//		                 
+//
+//		                /******** Called when User on Gps  *********/
+//
+//		                 
+//
+//		                Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
+//
+//	            }
+//
+//	         
+//
+//	            @Override
+//
+//	            public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//		                // TODO Auto-generated method stub
+//
+//		                 
+//
+//	            }
+//
+//
+/////////////

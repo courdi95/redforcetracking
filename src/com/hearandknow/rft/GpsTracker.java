@@ -1,18 +1,13 @@
 package com.hearandknow.rft;
 
 
-import android.app.AlertDialog;
-import android.app.Service;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.util.Log;
+import android.app.*;
+import android.content.*;
+import android.location.*;
+import android.os.*;
+import android.provider.*;
+import android.util.*;
+import android.widget.*;
 
 
 public class GpsTracker extends Service implements LocationListener
@@ -38,6 +33,7 @@ public class GpsTracker extends Service implements LocationListener
 	// 1 minute     
 	// Declaring a Location Manager    
 	protected LocationManager locationManager ;
+	
 	public GpsTracker(Context context)
 	{
 		this.mContext = context;
@@ -66,7 +62,9 @@ public class GpsTracker extends Service implements LocationListener
 					locationManager.requestLocationUpdates(
 						LocationManager.NETWORK_PROVIDER,
 						MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-					Log.d("Network", "Network");
+					
+						Toast.makeText(getApplicationContext(), "Network", Toast.LENGTH_LONG).show();
+						Log.d("Network", "Network");
 					if (locationManager != null)
 					{
 						location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -83,6 +81,8 @@ public class GpsTracker extends Service implements LocationListener
 					if (location == null)
 					{
 						locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+						
+						Toast.makeText(getApplicationContext(), "Gps", Toast.LENGTH_LONG).show();
 						Log.d("GPS Enabled", "GPS Enabled");
 						if (locationManager != null)
 						{
