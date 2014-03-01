@@ -17,6 +17,8 @@ public class MainActivity extends Activity implements LocationListener
 	private SharedPreferences sharedPref;
 	private String num_center;
 	private String default_num_center = "003360000000";
+	private int default_timer_beacon = 1000;
+	private int timer_beacon;
 	private double myLatitude; 
 	private double myLongitude; 	
 	private Location myLocation;
@@ -43,6 +45,10 @@ public class MainActivity extends Activity implements LocationListener
 			getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 		num_center = sharedPref.getString(getString(R.string.saved_num_center), default_num_center);
 	
+		//timer beacon par defaut
+		sharedPref = getSharedPreferences(
+			getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+		timer_beacon = sharedPref.getInt(getString(R.string.saved_timer_beacon), default_timer_beacon);
 		
 		// gps
 
@@ -330,7 +336,7 @@ public class MainActivity extends Activity implements LocationListener
 
 //					Toast.makeText(getApplicationContext(), "Map",
 //								   Toast.LENGTH_SHORT).show();
-					Intent intt = new Intent(me, MyMap.class);
+					Intent intt = new Intent(me, MyMap2.class);
 					startActivity(intt);
 				};
 			}

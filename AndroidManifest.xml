@@ -35,6 +35,9 @@
 			android:name=".MyMap"
 		/>
 		<activity
+			android:name=".MyMap2"
+		/>
+		<activity
 			android:name=".MyMessage"
 		/>
 

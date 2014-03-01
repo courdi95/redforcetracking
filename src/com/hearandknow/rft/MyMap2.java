@@ -2,7 +2,7 @@ package com.hearandknow.rft;
 
 
 import android.app.*;
-import android.content.*;
+import android.location.*;
 import android.os.*;
 import android.view.*;
 import android.view.View.*;
@@ -11,8 +11,9 @@ import org.osmdroid.tileprovider.tilesource.*;
 import org.osmdroid.util.*;
 import org.osmdroid.views.*;
 
-public class MyMap extends Activity
+public class MyMap2 extends Activity implements LocationListener
 {
+
 
 	public MapView mapView;
 	private boolean bCenterGps;
@@ -68,6 +69,56 @@ public class MyMap extends Activity
 	}
 
 //	mapView.setUseDataConnection(true);
+
+	/************* Called after each 3 sec **********/
+
+	@Override
+	public void onLocationChanged(Location location)
+	{
+
+		String str = "Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude();
+		Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+		if (bCenterGps)
+		{
+			mapView.getController().setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
+		};
+	}
+
+
+
+	@Override
+	public void onProviderDisabled(String provider)
+	{
+
+		/******** Called when User off Gps *********/
+		Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider)
+	{
+
+		/******** Called when User on Gps  *********/
+		Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras)
+	{
+
+		// TODO Auto-generated method stub
+		String msgToast;
+		msgToast ="Status changed";
+		msgToast = msgToast.concat (provider);
+		Toast.makeText(getBaseContext(),msgToast, Toast.LENGTH_LONG).show();
+		
+	  
+	}
+
+
+
 }
 
 
